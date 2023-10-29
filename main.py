@@ -28,20 +28,13 @@ class DataModelIn(BaseModel):
     }
 
 
-@app.post("/teste1")
-def teste1(data: DataModelIn):
-    print(dict(data))
-    return True
-
-
-@app.post("/teste2")
-def teste2(data: List[DataModelIn]):
+@app.post("/teste")
+def teste(input_data: List[DataModelIn]):
     lista = []
-    for i in data:
+    for i in input_data:
         lista.append(dict(i))
-    asd = pd.DataFrame(lista)
-    print(asd)
-    return True
+    print(pd.DataFrame(lista).to_dict("records"))
+    return pd.DataFrame(lista).to_dict("records")
 
 
 if __name__ == "__main__":
