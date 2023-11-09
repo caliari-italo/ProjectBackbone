@@ -34,4 +34,15 @@ for i in range(10000):
         },
     )
 
-found = mongo.find("database1", "collection1", {"id": 1})
+found = mongo.find("database1", "collection1", {})
+
+found = mongo.find(
+    "database1",
+    "collection1",
+    {
+        "date": {
+            "$gte": datetime.datetime(2023, 11, 9, 23, 22),
+            "$lt": datetime.datetime(2023, 11, 9, 23, 25),
+        },
+    },
+)
