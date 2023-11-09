@@ -1,15 +1,18 @@
 import os
 from datetime import datetime
-from typing import Dict, List, Optional, Union
+from typing import List, Union
 
+# load_ext cudf.pandas
 import pandas as pd
-from fastapi import Body, FastAPI, File, UploadFile, status
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
 
 
 class DataModelIn(BaseModel):
+    """schema"""
+
     text: str = ""
     number: Union[str, int, float] = ""
     date: Union[str, datetime] = ""
@@ -27,7 +30,8 @@ class DataModelIn(BaseModel):
 
 
 @app.post("/teste")
-def teste(input_data: List[DataModelIn]):
+def teste(input_data: List[DataModelIn]) -> pd.DataFrame():
+    """asdasdasd"""
     lista = []
     for i in input_data:
         lista.append(dict(i))
