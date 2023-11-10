@@ -17,6 +17,16 @@ services:
       my_net:
         ipv4_address: 192.168.0.10
 
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    networks:
+      my_net:
+        ipv4_address: 192.168.0.20
 
   python:
     image: python:3.8
@@ -29,4 +39,4 @@ services:
       - 8000:8000
     networks:
       my_net:
-        ipv4_address: 192.168.0.20
+        ipv4_address: 192.168.0.60
