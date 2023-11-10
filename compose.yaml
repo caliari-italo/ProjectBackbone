@@ -27,6 +27,18 @@ services:
     networks:
       my_net:
         ipv4_address: 192.168.0.20
+  
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 15432:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: italo@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    networks:
+      my_net:
+        ipv4_address: 192.168.0.30
 
   python:
     image: python:3.8
