@@ -14,7 +14,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./mongodb:/data/db
+      - ./db/mongodb:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -45,7 +45,7 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/
     volumes:
-      - ./postgres:/var/lib/postgresql/data/
+      - ./db/postgres:/var/lib/postgresql/data/
     networks:
       my_net:
         ipv4_address: 192.168.0.20
@@ -72,7 +72,11 @@ services:
         ipv4_address: 192.168.0.22
 
   python:
-    image: python:3.8
+    container_name: python_env
+    user: "${UID}:${GID}"
+    build:
+      context: docker
+      dockerfile: python.dockerfile
     volumes:
       - ./:/app
     working_dir: /app

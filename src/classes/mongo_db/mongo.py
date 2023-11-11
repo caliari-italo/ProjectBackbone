@@ -1,14 +1,16 @@
 import datetime
 from typing import Union
 from pymongo import MongoClient
-
-host = HOST = "192.168.0.10"
-port = PORT = 27017
+from classes.mongo_db.mongo_db_info import mongo_db_info
 
 
 class MongoDB:
-    def set_client(self, host: str, port: int):
-        self._client = MongoClient(host, port)
+    def __init__(self):
+        self._host = mongo_db_info["HOST"]
+        self._port = mongo_db_info["PORT"]
+
+    def connect_to_db(self):
+        self._client = MongoClient(self._host, self._port)
 
     def post(self, database_name: str, collection_name: str, data: Union[list, dict]):
         if isinstance(data, dict):
@@ -21,6 +23,7 @@ class MongoDB:
 
 
 mongo = MongoDB()
+mongo.connect_to_db()
 mongo.set_client(HOST, PORT)
 
 
