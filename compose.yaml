@@ -13,10 +13,28 @@ services:
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - ./mongodb:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     networks:
       my_net:
         ipv4_address: 192.168.0.10
 
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    networks:
+      my_net:
+        ipv4_address: 192.168.0.11
+              
   postgres:
     image: postgres
     restart: always
@@ -24,7 +42,10 @@ services:
       - 5432:5432
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/
+    volumes:
+      - ./postgres:/var/lib/postgresql/data/
     networks:
       my_net:
         ipv4_address: 192.168.0.20
@@ -36,7 +57,7 @@ services:
       - 8080:8080
     networks:
       my_net:
-        ipv4_address: 192.168.0.25
+        ipv4_address: 192.168.0.21
 
   pgadmin4:
     image: dpage/pgadmin4
@@ -45,10 +66,10 @@ services:
       - 15432:80
     environment:
       PGADMIN_DEFAULT_EMAIL: postgres@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_PASSWORD: postgres
     networks:
       my_net:
-        ipv4_address: 192.168.0.30
+        ipv4_address: 192.168.0.22
 
   python:
     image: python:3.8
@@ -61,4 +82,4 @@ services:
       - 8000:8000
     networks:
       my_net:
-        ipv4_address: 192.168.0.60
+        ipv4_address: 192.168.0.90
