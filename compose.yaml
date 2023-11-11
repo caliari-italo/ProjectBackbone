@@ -1,18 +1,9 @@
-networks:
-  my_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.0.0/24
-          gateway: 192.168.0.1
-
+version: "3.8"
 services:
 
   mongo:
     image: mongo
     restart: always
-    ports:
-      - 27017:27017
     volumes:
       - ./db/mongodb:/data/db
     environment:
@@ -21,12 +12,12 @@ services:
     networks:
       my_net:
         ipv4_address: 192.168.0.10
+    ports:
+      - 27017:27017
 
   mongo-express:
     image: mongo-express
     restart: always
-    ports:
-      - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
@@ -34,56 +25,65 @@ services:
     networks:
       my_net:
         ipv4_address: 192.168.0.11
-              
+    ports:
+      - 8081:8081
+
   postgres:
     image: postgres
     restart: always
-    ports:
-      - 5432:5432
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data/
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data/
-    volumes:
-      - ./db/postgres:/var/lib/postgresql/data/
     networks:
       my_net:
         ipv4_address: 192.168.0.20
+    ports:
+      - 5432:5432
 
   adminer:
     image: adminer
     restart: always
-    ports:
-      - 8080:8080
     networks:
       my_net:
         ipv4_address: 192.168.0.21
+    ports:
+      - 8080:8080
 
   pgadmin4:
     image: dpage/pgadmin4
     restart: always
-    ports:
-      - 15432:80
     environment:
       PGADMIN_DEFAULT_EMAIL: postgres@gmail.com
       PGADMIN_DEFAULT_PASSWORD: postgres
     networks:
       my_net:
         ipv4_address: 192.168.0.22
+    ports:
+      - 15432:80
 
   python:
     container_name: python_env
-    user: "${UID}:${GID}"
     build:
       context: docker
       dockerfile: python.dockerfile
     volumes:
       - ./:/app
+    user: "${UID}:${GID}"
     working_dir: /app
     stdin_open: true
     tty: true
-    ports:
-      - 8000:8000
     networks:
       my_net:
         ipv4_address: 192.168.0.90
+    ports:
+      - 8000:8000
+
+networks:
+  my_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.0.0/24
