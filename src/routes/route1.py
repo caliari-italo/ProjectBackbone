@@ -1,12 +1,7 @@
-import os
-from datetime import datetime
-from typing import List, Union
+from typing import List
 
-import numpy as np
-import pandas as pd
-from fastapi import APIRouter, FastAPI, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 
-from src.exceptions.general_exceptions import GeneralException
 from src.general.schemas import DropList, InputData
 
 route_one = APIRouter()
