@@ -4,7 +4,7 @@ from typing import Union
 from pydantic import BaseModel
 
 
-class DataModelIn(BaseModel):
+class InputData(BaseModel):
     """ex schema"""
 
     text: Union[str, None] = None
