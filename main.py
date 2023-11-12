@@ -1,37 +1,21 @@
-import os
-from datetime import datetime
-from typing import List, Union
+import uvicorn
+from fastapi import FastAPI
 
-import numpy as np
-import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from src.routes.route1 import route_one
+from src.routes.route2 import route_two
 
-from src.exceptions.general_exceptions import GeneralException
-from src.general.schemas import DropList, InputData
+app = FastAPI(
+    title="MyApp",
+    summary="That's it!",
+    description="""
+                That's really it!
+                """,
+    version="0.0.1",
+)
 
-app = FastAPI()
+app.include_router(route_one, prefix="/route_one", tags=["route_one"])
 
-
-@app.get("/get_test/")
-async def get_test(input_data: DropList):
-    try:
-        return input_data
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/post_test")
-def post_test(input_data: List[InputData]) -> list:
-    try:
-        temp = []
-        input_data = list(input_data)
-        for entry in input_data:
-            temp.append(dict(entry))
-        input_data = temp.copy()
-        return input_data
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
+app.include_router(route_two, prefix="/route_two", tags=["route_two"])
 
 if __name__ == "__main__":
-    os.system("uvicorn main:app --reload")
+    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
