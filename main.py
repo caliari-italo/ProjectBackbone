@@ -7,15 +7,13 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 
 from src.exceptions.general_exceptions import GeneralException
-from src.general.schemas import InputData
+from src.general.schemas import DropList, InputData
 
 app = FastAPI()
 
 
 @app.get("/get_test/")
-async def get_test(
-    input_data: str = Query(enum=["example1", "example2", "example3", "example4"])
-):
+async def get_test(input_data: DropList):
     try:
         return input_data
     except Exception as e:

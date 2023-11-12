@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from typing import Union
 
 from pydantic import BaseModel
@@ -21,3 +22,10 @@ class InputData(BaseModel):
             ]
         }
     }
+
+
+class DropList(str, Enum):
+    exemple1 = "exemple1"
+    exemple2 = "exemple2"
+    exemple3 = "exemple3"
+    exemple4 = "exemple4"
