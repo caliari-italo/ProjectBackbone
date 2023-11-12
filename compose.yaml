@@ -71,15 +71,16 @@ services:
       dockerfile: python.dockerfile
     volumes:
       - ./:/app
-    user: "${UID}:${GID}"
-    working_dir: /app
-    stdin_open: true
-    tty: true
     networks:
       my_net:
         ipv4_address: 192.168.0.90
     ports:
       - 8000:8000
+    user: "${UID}:${GID}"
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: python3 ./main.py
 
 networks:
   my_net:

@@ -6,11 +6,10 @@ from src.routes.route2 import route_two
 
 app = FastAPI(
     title="MyApp",
-    summary="That's it!",
     description="""
                 That's really it!
                 """,
-    version="0.0.1",
+    version="1.0.0",
 )
 
 app.include_router(route_one, prefix="/route_one", tags=["route_one"])
@@ -18,4 +17,4 @@ app.include_router(route_one, prefix="/route_one", tags=["route_one"])
 app.include_router(route_two, prefix="/route_two", tags=["route_two"])
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

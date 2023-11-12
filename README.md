@@ -1,5 +1,8 @@
 # MyReppo
 
+FastAPI
+http://localhost:8080
+
 pgAdmin
 http://localhost:15432
 
