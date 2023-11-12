@@ -2,18 +2,19 @@ import os
 from datetime import datetime
 from typing import List, Union
 
+import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 
-from classes.general.schemas import DataModelIn
+from src.exceptions.general_exceptions import GeneralException
+from src.general.schemas import DataModelIn
 
 app = FastAPI()
 
 
 def error():
     try:
-        asd = 1 / 0
-        raise FileNotFoundError()
+        raise GeneralException()
 
     except Exception as e:
         return e
@@ -24,8 +25,8 @@ async def read_item():
     try:
         re = error()
         if isinstance(re, Exception):
-            raise Exception
-    except Exception:
+            raise re
+    except Exception as e:
         raise HTTPException(status_code=404, detail=str(re))
 
 
