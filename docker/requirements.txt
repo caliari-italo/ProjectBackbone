@@ -1,5 +1,4 @@
-pandas
-numpy
-pymongo
-fastapi
-uvicorn
+# mlflow
+# pymongo
+# fastapi
+# uvicorn 
