@@ -110,7 +110,6 @@ services:
               capabilities: [gpu]
     # command: python3 ./main.py
 
-services:
   label_studio:
     image: heartexlabs/label-studio:latest
     container_name: label_studio
