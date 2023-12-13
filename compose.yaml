@@ -121,6 +121,22 @@ services:
       - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
       - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data
 
+  abnormal-machine-learning-training:
+    image: ultralytics/ultralytics:latest
+    container_name: ultralytics
+    restart: always
+    volumes:
+      - .:/app
+    working_dir: /app
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
 networks:
   my_net:
     ipam:
