@@ -110,6 +110,18 @@ services:
               capabilities: [gpu]
     # command: python3 ./main.py
 
+services:
+  label_studio:
+    image: heartexlabs/label-studio:latest
+    container_name: label_studio
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/label-studio/data
+    environment:
+      - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data
+
 networks:
   my_net:
     ipam:
