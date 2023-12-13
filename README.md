@@ -7,3 +7,5 @@
 [Adminer](http://localhost:8080)
 
 [Mongo-Express](http://localhost:8081)
+
+[Label-Studio](http://localhost:8080)
